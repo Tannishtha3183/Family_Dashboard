@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Text Display</title>
+    <style>
+        :root {
+            --color-bg-base: #0f172a;
+            --color-bg-surface: #1e293b;
+            --color-text-primary: #f1f5f9;
+            --color-text-secondary: #cbd5e1;
+            --color-accent: #38bdf8;
+            --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --color-bg-base: #ffffff;
+                --color-bg-surface: #f1f5f9;
+                --color-text-primary: #0f172a;
+                --color-text-secondary: #475569;
+                --color-accent: #0284c7;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background: var(--color-bg-base);
+            color: var(--color-text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        /* NEW: a vertical wrapper so boxes are up–down */
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .boxbaba {
+            width: 60%;
+            background: var(--color-bg-surface);
+            padding: 2rem 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .container {
+            width: 90%;
+            background: var(--color-bg-surface);
+            padding: 4rem 3rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--color-accent) 0%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--color-accent) 0%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        p {
+            font-size: 1.25rem;
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        .highlight {
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .boxbaba {
+                width: 100%;
+                padding: 2rem 1.5rem;
+            }
+
+            .container {
+                width: 100%;
+                padding: 3rem 2rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h3 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="boxbaba">
+            <h3>Baba Naam Kevalam</h3>
+        </div>
+
+        <div class="container">
+            <h1>Yam Niyam</h1>
+
+            <br><br>
+            <p><span class="highlight">Five Yama (Introversial Conduct)</span></p>
+            <p>How we should behave with others (Self-control)</p>
+
+            <br><br>
+            <p><span class="highlight">1. Ahiḿsá: </span>Not to inflict pain or hurt on anybody by thought, word or action, is Ahiḿsá.</p>
+            <p>Do not hurt anyone — not by thoughts, words, or actions. Be kind and gentle to all living beings.</p>
+
+            <br><br>
+            <p><span class="highlight">2. Satya: </span>The benevolent use of mind and words is Satya.</p>
+            <p>Think and speak truthfully and positively. Use words that are honest and helpful, not harmful.</p>
+
+            <br><br>
+            <p><span class="highlight">3. Asteya: </span>To renounce the desire to acquire or retain the wealth of others is asteya. Asteya means “non-stealing.”</p>
+            <p>Do not take or desire what belongs to others. Be honest and satisfied with what you earn.</p>
+
+            <br><br>
+            <p><span class="highlight">4. Brahmacarya: </span>To keep the mind always absorbed in Brahma is Brahmacarya.</p>
+            <p>Keep your mind pure and focused on higher values. Control desires and use your energy in a good and meaningful way.</p>
+
+            <br><br>
+            <p><span class="highlight">5. Aparigraha: </span>To renounce everything excepting the necessities for the maintenance of the body is known as Aparigraha.</p>
+            <p>Do not collect unnecessary things. Take only what you truly need and avoid greed.</p>
+
+            <br><br>
+            <br><br>
+
+            <p>---------------------------------------------------------------------------</p>
+
+            <br><br>
+            <br><br>
+
+            <p><span class="highlight">Five Niyama (Extroversial Conduct)</span></p>
+            <p>How we should discipline ourselves (Personal habits)</p>
+
+            <br><br>
+            <p><span class="highlight">1. Shaoca: </span>Maintaining cleanliness of both body and mind – mental cleanliness involves kindliness towards all creatures, charity, working for the welfare of others and being dutiful.</p>
+            <p>Keep your body clean and your mind pure. Be kind, helpful, charitable, and do good for others.</p>
+
+            <br><br>
+            <p><span class="highlight">2. Santośa: </span>Being content with what one has and trying to stay cheerful.</p>
+            <p>Be happy and satisfied with what you have. Avoid constant complaining and comparison.</p>
+
+            <br><br>
+            <p><span class="highlight">3. Tapah: </span>Doing regular service – undergoing some hardship or sacrifice to help others.</p>
+            <p>Do good work even if it is difficult. Be ready to make small sacrifices to help others.</p>
+
+            <br><br>
+            <p><span class="highlight">4. Svádhyáya: </span>Keeping good company of both people and books/media – studying/watching good media and literature with proper reflective understanding. Sva’dhya’ya is also done by attending group meditation regularly and keeping spiritual company.</p>
+            <p>Learn good things by reading, watching, or listening to positive and meaningful content. Keep good company and practice meditation or self-reflection.</p>
+
+            <br><br>
+            <p><span class="highlight">5. Iishvara prańidhána: </span>Maintaining faith in the guidance of the Infinite Consciousness (Iishvara) in pleasure and pain, prosperity and adversity. Considering oneself as the instrument, and not the wielder of the instrument.</p>
+            <p>Trust in the guidance of a higher power. Accept both happiness and difficulties calmly and act as a humble instrument, not the controller.</p>
+        </div>
+    </div>
+</body>
+</html>

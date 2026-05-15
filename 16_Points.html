@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Text Display</title>
+    <style>
+        :root {
+            --color-bg-base: #0f172a;
+            --color-bg-surface: #1e293b;
+            --color-text-primary: #f1f5f9;
+            --color-text-secondary: #cbd5e1;
+            --color-accent: #38bdf8;
+            --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --color-bg-base: #ffffff;
+                --color-bg-surface: #f1f5f9;
+                --color-text-primary: #0f172a;
+                --color-text-secondary: #475569;
+                --color-accent: #0284c7;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background: var(--color-bg-base);
+            color: var(--color-text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        /* NEW: a vertical wrapper so boxes are up–down */
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .boxbaba {
+            width: 60%;
+            background: var(--color-bg-surface);
+            padding: 2rem 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .container {
+            width: 90%;
+            background: var(--color-bg-surface);
+            padding: 4rem 3rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--color-accent) 0%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--color-accent) 0%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        p {
+            font-size: 1.25rem;
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        .highlight {
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .boxbaba {
+                width: 100%;
+                padding: 2rem 1.5rem;
+            }
+
+            .container {
+                width: 100%;
+                padding: 3rem 2rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h3 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="boxbaba">
+            <h3>Baba Naam Kevalam</h3>
+        </div>
+
+        <div class="container">
+            <h1>16 Points</h1>
+
+            <br><br>
+            <p><span class="highlight">1. After urination, wash the urinary organ with water.</span></p>
+            <p>Keep yourself clean by washing the private area with water after using the toilet.</p>
+
+            <br><br>
+            <p><span class="highlight">2. Males should either be circumcised or keep the foreskin pulled back at all times. </span></p>
+            <p>Men should keep their genital area clean — either through circumcision or by regularly pulling back the foreskin and washing properly.</p>
+
+            <br><br>
+            <p><span class="highlight">3. Never cut the hair of the joints of the body.</span></p>
+            <p>Hair around joints (like armpits, pubic area, etc., according to their rules) shouldn’t be cut — it’s considered part of natural health in this system.</p>
+
+            <br><br>
+            <p><span class="highlight">4. Males should always use kaopiina (laungot’a’).</span></p>
+            <p>A simple undergarment is recommended for hygiene, modesty, and support.</p>
+
+            <br><br>
+            <p><span class="highlight">5. Do Vya’paka Shaoca as directed. </span></p>
+            <p>This is a special yogic cleansing routine (washing parts of the body with mantra/awareness) to maintain physical and mental purity.</p>
+            
+            <br><br>
+            <br><br>
+
+            <p>---------------------------------------------------------------------------</p>
+<p><span class="highlight">Steps to Perform Vyápaka Shauca:</span></p>
+<p><span class="highlight">Genitals: </span>After urination or before the process, wash the genital organ with cold water.</p>
+<p><span class="highlight">Limbs: </span>Splash cold water on your legs from the knees down and on your arms from the elbows down.</p>
+<p><span class="highlight">Mouth & Eyes: </span>Take some water in your mouth and hold it there (without swallowing). While holding the water, splash your eyes and face with cold water at least 12 times. It is recommended to keep your eyes open so the water directly cools the optic nerve.</p>
+<p><span class="highlight">Ears & Neck: </span>Wash both ears and the back of the neck with cold water.</p>
+<p><span class="highlight">Nose (Optional): </span>If your stomach is empty, you may also flush your nose by sniffing water into the nostrils and spitting it out through the mouth.</p>
+<p><span class="highlight">Key Guidelines:</span></p>
+<p><span class="highlight">Temperature: </span>Use water that is cooler than your body temperature. In extremely cold weather, luke-warm water may be used.</p>
+<p><span class="highlight">Purpose: </span>This practice is one of the Sixteen Points of Ananda Marga. It helps prevent "genital over-stimulation," expels urinary sediment, and prepares the mind for deep concentration.</p>
+<p><span class="highlight">Timing: </span>Perform this before every meditation session, before eating, and before sleep.</p>
+
+            <p>---------------------------------------------------------------------------</p>
+
+
+            <br><br>
+            <br><br>
+
+
+            <p><span class="highlight">6. Bathe according to the prescribed system.</span></p>
+            <p>Follow a specific method of bathing — usually regular bathing with attention to cleanliness and sometimes spiritual awareness.</p>
+
+            <br><br>
+            <br><br>
+
+            <p>---------------------------------------------------------------------------</p>
+<p><span class="highlight">Bathing Technique (Snána Vidhi) </span></p>
+<p><span class="highlight">Preparation: </span> Use water cooler than body temperature (lukewarm only in extreme cold).</p>
+<p><span class="highlight">Navel First: </span>Start by dampening your navel with water.</p>
+<p><span class="highlight">Lower Body: </span>Splash water from the front to wet the region below the navel.</p>
+<p><span class="highlight">Back: </span> Pour water on the small of your back (opposite the navel).</p>
+<p><span class="highlight">Crown & Spine: </span>Pour water over the crown of your head so that it trickles down your entire backbone.</p>
+<p><span class="highlight">Full Bath: </span>Finally, bathe the rest of your body. It is recommended to bathe while sitting rather than standing. </p>
+<br><br>
+<p><span class="highlight">Shloka After Bath (Pitr Yajiṋa Mantra)</span></p><p>
+पितृ पुरुषेभ्यो नमः, ऋषि देवेभ्यो नमः।
+ब्रह्मार्पणं ब्रह्महविर् ब्रह्माग्नौ ब्रह्मणाहुतम्।
+ब्रह्मैव तेन गन्तव्यं ब्रह्मकर्म समाधिना॥</p>
+<br><br>
+<p><span class="highlight">Meaning: </span></p><p>
+ पूर्वजों को मेरा नमस्कार है।
+ उन दिव्य ऋषियों (जिन्होंने मानवता का मार्ग प्रशस्त किया) को मेरा नमस्कार है।
+ अर्पण (हवन का पात्र) ब्रह्म है, हवि (आहुति) भी ब्रह्म है, ब्रह्म रूपी कर्ता द्वारा ब्रह्म रूपी अग्नि में जो आहुति दी जाती है, वह भी ब्रह्म ही है।
+ जो मनुष्य अपने प्रत्येक कार्य में ब्रह्म के दर्शन करता है, वह निश्चित रूप से ब्रह्म को ही प्राप्त होता है।</p>
+
+            <p>---------------------------------------------------------------------------</p>
+
+
+            <br><br>
+            <br><br>
+            <p><span class="highlight">7. Take only Sa’ttvika (sentient) food. </span></p>
+            <p>Eat simple, clean, vegetarian food that keeps the mind calm and healthy — avoid meat, alcohol, onion/garlic (in their tradition).</p>
+
+            <br><br>
+            <p><span class="highlight">8. Observe fast as prescribed.</span></p>
+            <p>Do fasting on certain days to improve discipline, health, and mental control.</p>
+
+            <br><br>
+            <p><span class="highlight">9.Do Sa’dhana regularly.</span></p>
+            <p>Practice meditation or spiritual exercises regularly.</p>
+
+            <br><br>
+            <p><span class="highlight">10. Observe uncompromising strictness and faith regarding the sanctity of the Is’t’a (Goal).</span></p>
+            <p>Stay devoted and serious about your spiritual aim.</p>
+            
+            <br><br>
+            <p><span class="highlight">11. Observe uncompromising strictness and faith regarding the sanctity of the A’darsha (Ideology).</span></p>
+            <p>Follow the values and philosophy of the path sincerely.</p>
+
+            <br><br>
+            <p><span class="highlight">12. Observe uncompromising strictness and faith regarding the sanctity of the Supreme Command. </span></p>
+            <p>Respect the main spiritual instructions given by the founder/teachings.</p>
+
+            <br><br>
+            <p><span class="highlight">13. Observe uncompromising strictness and faith regarding the sanctity of the Conduct Rules.</span></p>
+            <p>Live according to the moral and behavioral guidelines of the organization.</p>
+
+            <br><br>
+            <p><span class="highlight">14. Always remember the content of your oaths.</span></p>
+            <p>Keep your promises and spiritual commitments in mind every day.</p>
+
+            <br><br>
+            <p><span class="highlight">15. Regular participation in the weekly Dharmacakra at the local Ja’grti should be considered mandatory.</span></p>
+            <p>Join the weekly group meditation/spiritual gathering if possible.</p>
+            
+            <br><br>
+            <p><span class="highlight">16. Observe C.S.D.K. (Conduct Rules, Seminar, Duty, Kiirtana).</span></p>
+            <p>Conduct Rules – live ethically</p>
+               <p>Seminar – attend teachings/discussions</p>
+               <p>Duty – do service</p>
+               <p>Kiirtana – sing spiritual chants/devotional songs</p>
+            
+        </div>
+    </div>
+</body>
+</html>

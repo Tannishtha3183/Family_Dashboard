@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js">// Anand Marga sliding ticker content
+const amItems=[
+ {t:'RU News',l:'https://anandamarga.org'},
+ {t:'Service Reports',l:'https://anandamarga.org/service'},
+ {t:'Prout Updates',l:'https://proutglobe.org'},
+ {t:'Prabhat Samgiita Events',l:'https://prabhatasamgiita.net/'},
+ {t:'Disaster Relief',l:'https://anandamarga.org'}
+];
+function loadTicker(){
+ amTicker.innerHTML=amItems.map(i=>
+   `<a href="${i.l}" target="_blank" style="margin-right:40px;color:var(--text);text-decoration:none">${i.t}</a>`
+ ).join('');
+ amTicker.animate([{transform:'translateX(100%)'},{transform:'translateX(-100%)'}],{duration:26000,iterations:Infinity});
+}
+loadTicker();
+
+</script>
+
+<style>
+
+:root{
+ --g:linear-gradient(120deg,#1e88e5,#4dd0e1);
+ --g2:linear-gradient(120deg,#43cea2,#185a9d);  
+ --bg:#f0f6fc;--card:#ffffff;--text:#0b1f33;
+ --border:#cfdff2;--soft:#e8f1ff;
+}
+.dark{
+ --bg:#0e1623;--card:#162030;--text:#e2edff;
+ --border:#22324a;--soft:#1c2a3f;
+}
+body{margin:0;font-family:'Poppins','Segoe UI',system-ui;background:var(--bg);color:var(--text)}
+.sticky{position:sticky;top:0;z-index:100}
+
+.top{background:var(--g);padding:14px;text-align:center;font-size:22px;font-weight:700;color:#fff}
+header{background:var(--card);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:10px 14px}
+
+.clock{font-weight:600}
+.themeBtn{cursor:pointer;padding:6px 10px;border-radius:12px;border:1px solid var(--border);background:var(--soft)}
+
+/* LEFT SLIDER ONLY */
+.left{
+ background:var(--card);border:1px solid var(--border);border-radius:18px;
+ padding:10px;height:82vh;overflow-y:auto;
+}
+
+.searchWrap{padding:4px}
+.searchBar{width:94%;padding:9px;border-radius:10cm;border:1px solid var(--border);margin:4px}
+
+.cat{padding:9px;border:1px solid var(--border);border-radius:14px;margin:6px 0;cursor:pointer;background:var(--soft);display:flex;gap:6px;align-items:center}
+.cat:hover{background:var(--g);color:#fff}
+
+.layout{display:grid;grid-template-columns:240px 1fr 350px;gap:10px;padding:10px}
+.center{padding:0 10px}
+.note{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:15px;text-align:center;margin-bottom:10px;font-weight:600}
+#dynamic{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;min-height:420px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.smallBox{padding:12px;border:1px solid var(--border);border-radius:14px;text-align:center;background:var(--soft);cursor:pointer}
+.smallBox:hover{background:var(--g2);color:#fff}
+
+.right{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:10px}
+
+.newsSection{border:1px solid var(--border);border-radius:14px;margin-bottom:8px}
+.newsHeader{padding:6px 8px;font-weight:600;background:var(--soft)}
+.newsItem{padding:6px 8px;border-top:1px solid var(--border);cursor:pointer}
+.newsItem:hover{background:var(--soft)}
+
+.todoRow{display:flex;justify-content:space-between;margin:6px 0;padding:6px;border:1px solid var(--border);border-radius:10px}
+.closeBtn{float:right;cursor:pointer}
+
+.illus{width:26px;opacity:.9}
+</style>
+</head>
+
+<body>
+<div class="sticky">
+ <div class="top">Be Great, By your Sadhana, By your Service and By your Sacrifice</div>
+ <header>
+  <h4 id="dateBox"></h4>
+  <div class="clock" id="clock"></div>
+  <div class="themeBtn" onclick="toggleTheme()" title="Eye Comfort Theme">◐</div>
+ </header>
+
+ <!-- Anand Marga Live Ticker -->
+ <div id="amTicker" style="background:var(--soft);border-bottom:1px solid var(--border);padding:6px;white-space:nowrap;overflow:hidden">
+   <div id="tickerText" style="display:inline-block;padding-left:100%;animation:ticker 65s linear infinite;cursor:pointer"></div>
+ </div>
+ <style>@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-100%)}}</style>
+</div>
+
+ <!-- Sliding Anand Marga News Ticker -->
+ <div class="ticker" style="background:var(--card);border-bottom:1px solid var(--border);padding:6px;overflow:hidden">
+   <div id="amTicker" style="white-space:nowrap"></div>
+ </div>
+</div>
+
+<div class="layout">
+
+<div class="left">
+ <div class="searchWrap">
+  <input class="searchBar" id="filter" placeholder="Search categories..." onkeyup="filterMenu()"/>
+ </div>
+
+ <div class="cat" onclick="load('google')">
+   <img class="illus" src="https://img.freepik.com/free-psd/google-icon-isolated-3d-render-illustration_47987-9777.jpg?semt=ais_hybrid&w=740&q=80"/> Google
+ </div>
+
+ <div class="cat" onclick="load('bills')">
+   <img class="illus" src="https://png.pngtree.com/png-vector/20210228/ourmid/pngtree-hand-holding-bills-paying-bill-concept-flat-vector-illustration-png-image_2983418.jpg"/> Bills
+ </div>
+
+ <div class="cat" onclick="load('banks')">
+   <img class="illus" src="https://www.shutterstock.com/image-illustration/3d-rendering-build-bank-business-260nw-1803591817.jpg"/> Banks
+ </div>
+
+ <div class="cat" onclick="load('spiritual')">
+   <img class="illus" src="https://patch-shop.com/public/cache/image/seo/ananda-marga-pratik-patch-antsiuvas-e69866.jpg"/> Spiritual
+ </div>
+
+ <div class="cat" onclick="load('engage')">
+   <img class="illus" src="https://images.stockcake.com/public/9/f/5/9f56bb4f-4d34-4a87-972b-34b98cc127b0/joyful-student-wonder-stockcake.jpg"/> Engage
+ </div>
+
+
+ <div class="cat" onclick="openTodo()">
+   <img class="illus" src="https://cdn-icons-png.flaticon.com/512/1828/1828640.png"/> Todo List
+ </div>
+</div>
+
+<div class="center">
+ <!-- Dynamic middle box -->
+ <div class="note" id="quoteBox">Loading wisdom...</div>
+ <div id="dynamic"></div>
+
+ <!-- News moved below middle box -->
+ <div style="margin-top:12px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:10px">
+  <h4>Live News</h4>
+  <div class="grid">
+   <div class="smallBox" onclick="loadNewsL('headlines')">Headlines</div>
+   <div class="smallBox" onclick="loadNewsL('india')">India</div>
+   <div class="smallBox" onclick="loadNewsL('world')">World</div>
+   <div class="smallBox" onclick="loadNewsL('sports')">Sports</div>
+   <div class="smallBox" onclick="loadNewsL('finance')">Finance</div>
+   <div class="smallBox" onclick="loadNewsL('politics')">Political</div>
+  </div>
+  <br><br>
+  <div id="news"></div>
+ </div>
+</div>
+
+<div class="right">
+ <h4>Live Weather – Global</h4>
+ <input class="searchBar" id="cityInput" placeholder="City / Town / Village / Country"/>
+ <div class="smallBox" onclick="weather()">Get Weather</div>
+ <div id="winfo"></div>
+ <div id="sun"></div>
+ <canvas id="chart"></canvas>
+
+</div>
+
+</div>
+
+<script>
+setInterval(()=>clock.innerText=new Date().toLocaleTimeString(),1000);
+function toggleTheme(){document.body.classList.toggle('dark')}
+
+function filterMenu(){
+ let v=filter.value.toLowerCase();
+ document.querySelectorAll('.cat').forEach(c=>{
+  c.style.display=c.innerText.toLowerCase().includes(v)?'flex':'none';
+ });
+}
+
+function updateDate() {
+  const date = new Date();
+
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = date.toLocaleString('en-US', { month: 'long' });
+  const year = date.getFullYear();
+  const weekday = date.toLocaleString('en-US', { weekday: 'long' });
+
+  document.getElementById("dateBox").textContent =
+    `${day} ${month} ${year}, ${weekday}`;
+}
+setInterval(updateDate, 1000);
+updateDate();
+
+function openTodo(){
+ dynamic.innerHTML=`
+ <h3>Todo List <span class='closeBtn' onclick='dynamic.innerHTML=""'>✕</span></h3>
+ <input id='ttext' class='searchBar' placeholder='Add work'/>
+ <div class='smallBox' onclick='addTodo()'>Add</div>
+ <div id='tlist'></div>`;
+}
+
+function addTodo(){
+ let v=ttext.value;if(!v)return;
+ tlist.innerHTML+=`<div class='todoRow'>${v}<span onclick='this.parentNode.remove()'>✕</span></div>`;
+ ttext.value='';
+}
+
+function load(s){
+if(s=='engage')dynamic.innerHTML=`<div class='grid'>
+  <div class='smallBox' onclick="window.open('https://web.whatsapp.com/','_blank')">Whatsaap</div>
+  <div class='smallBox' onclick="window.open('https://www.facebook.com/','_blank')">FaceBook</div>
+  <div class='smallBox' onclick="window.open('https://www.youtube.com/','_blank')">Youtube</div>
+  <div class='smallBox' onclick="window.open('https://licindia.in/','_blank')">LIC</div>
+  <div class='smallBox' onclick="window.open('https://www.irctc.co.in/','_blank')">IRCTC</div>
+  <div class='smallBox' onclick="window.open('https://www.irctc.co.in/online-charts/','_blank')">IRCTC Vacant Seats</div>
+  <div class='smallBox' onclick="window.open('https://uidai.gov.in/en/','_blank')">AdharCard</div>
+  <div class='smallBox' onclick="window.open('https://pan.utiitsl.com/','_blank')">PanCard</div>
+  <div class='smallBox' onclick="window.open('https://www.passportindia.gov.in/psp','_blank')">Passport</div>
+  <div class='smallBox' onclick="window.open('http://www.incometax.gov.in/iec/foportal/','_blank')">Income Tax</div>
+ </div>`;
+
+
+ if(s=='google')dynamic.innerHTML=`<div class='grid'>
+  <div class='smallBox' onclick="window.open('https://mail.google.com/mail/','_blank')">Gmail</div>
+  <div class='smallBox' onclick="window.open('https://maps.google.com/','_blank')">Google Maps</div>
+  <div class='smallBox' onclick="window.open('https://drive.google.com/drive/quota','_blank')">Google Drive</div>
+  <div class='smallBox' onclick="window.open('https://photos.google.com/login','_blank')">Google Photos</div>
+  <div class='smallBox' onclick="window.open('https://calendar.google.com/','_blank')">Google Calendar</div>
+  <div class='smallBox' onclick="window.open('https://meet.google.com/','_blank')">Google Meet</div>
+  <div class='smallBox' onclick="window.open('https://in.mail.yahoo.com/','_blank')">Yahoo</div>
+ </div>`;
+
+ if(s=='bills')dynamic.innerHTML=`<div class='grid'>
+  <div class='smallBox' onclick="window.open('https://www.gujaratgas.com/submit-meter-reading/','_blank')">Gujarat Gas</div>
+  <div class='smallBox' onclick="window.open('https://connect.torrentpower.com/tplcp/','_blank')">Torent Power (Gujarat, Daman)</div>
+  <div class='smallBox' onclick="window.open('https://vapicity.in/','_blank')">Vapi Municipal</div>
+  <div class='smallBox' onclick="window.open('https://swp.dddgov.in/home','_blank')">UT gov</div>
+
+ </div>`;
+
+ if(s=='banks')dynamic.innerHTML=`<div class='grid'>
+  <div class='smallBox' onclick="window.open('https://retail.sbi.bank.in/retail/login.htm','_blank')">SBI</div>
+  <div class='smallBox' onclick="window.open('https://portal.hdfc.com/login','_blank')">HDFC</div>
+  <div class='smallBox' onclick="window.open('https://www.kotak.bank.in/en/digital-banking/ways-to-bank/net-banking.html','_blank')">Kotak Mahendra</div>
+  <div class='smallBox' onclick="window.open('https://cibnext.icicibank.com/corp/AuthenticationController?FORMSGROUP_ID__=AuthenticationFG&__START_TRAN_FLAG__=Y&FG_BUTTONS__=LOAD&ACTION.LOAD=Y&AuthenticationFG.LOGIN_FLAG=1&BANK_ID=ICI','_blank')">ICICI</div>
+  <div class='smallBox' onclick="window.open('https://bankofbaroda.bank.in/','_blank')">Bank Of Baroda</div>
+ </div>`;
+
+ if(s=='spiritual')dynamic.innerHTML=`<div class='grid'>
+  <div class='smallBox' onclick="window.open('https://prabhatasamgiita.net/','_blank')">Prabhat Samgeet</div>
+  <div class='smallBox' onclick="window.open('https://anandamarga.org','_blank')">Ananda Marga</div>
+  <div class='smallBox' onclick="window.open('https://proutglobe.org','_blank')">Prout</div>
+  <div class='smallBox' onclick="window.open('https://tannishtha3183.github.io/Bash/Yam_Niyam.html','_blank')">Yam Niyam</div>
+  <div class='smallBox' onclick="window.open('https://tannishtha3183.github.io/Bash/16_Points.html','_blank')">16 Points</div>
+  <div class='smallBox' onclick="window.open('https://1mg.com','_blank')">Amurt</div>
+  <div class='smallBox' onclick="window.open('https://mnl-amps.org/index.php/chronology-of-am/','_blank')">History</div>
+  <div class='smallBox' onclick="window.open('https://www.anandamarga.org/ideology/self-realization/kaoshikii/','_blank')">Kaoshikii</div>
+  <div class='smallBox' onclick="window.open('http://anandamargauniversal.blogspot.com/2015/01/why-red-snake-fire-2-more.html','_blank')">Tandav Video</div>
+  <div class='smallBox' onclick="window.open('https://india.anandamarga.org/yogic-dances/','_blank')">Tandav Theory</div>  
+  <div class='smallBox' onclick="window.open('https://www.youtube.com/playlist?list=PLpry2vFbUP6UWOqrA1cMKK-Y_dtRjGNNh','_blank')">Kirtan Playlist</div>
+  <div class='smallBox' onclick="window.open('https://www.youtube.com/playlist?list=PLpry2vFbUP6Ul2NaOc8TmH9St0il7VTjk','_blank')">Baba Discources</div>
+  </div>`;
+}
+
+let weatherChart;
+async function weather(city){
+ try{
+  city = city || cityInput.value || 'Delhi';
+
+  // Primary: Open‑Meteo global
+  let geo = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}`).then(r=>r.json());
+
+  // Fallback to wttr for tiny villages
+  if(!geo.results){
+    let w = await fetch(`https://wttr.in/${city}?format=j1`).then(r=>r.json());
+    winfo.innerHTML = `🌡 ${w.current_condition[0].temp_C}°C<br/>💧 Humidity: ${w.current_condition[0].humidity}%<br/>🍃 Wind: ${w.current_condition[0].windspeedKmph} km/h`;
+    sun.innerHTML = `🌅 Sunrise: ${w.weather[0].astronomy[0].sunrise} | 🌇 Sunset: ${w.weather[0].astronomy[0].sunset}`;
+    return;
+  }
+
+  let {latitude, longitude, name, country} = geo.results[0];
+
+  let d = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m&daily=temperature_2m_max,sunrise,sunset&timezone=auto`).then(r=>r.json());
+
+  winfo.innerHTML = `<b>${name}, ${country}</b><br/>🌡 ${d.current.temperature_2m}°C<br/>💧 Humidity: ${d.current.relative_humidity_2m}%<br/>🍃 Wind: ${d.current.wind_speed_10m} km/h`;
+
+  sun.innerHTML = `🌅 Sunrise: ${new Date(d.daily.sunrise[0]).toLocaleTimeString()}<br/>🌇 Sunset: ${new Date(d.daily.sunset[0]).toLocaleTimeString()}`;
+
+  if(weatherChart) weatherChart.destroy();
+  weatherChart = new Chart(chart.getContext('2d'),{
+   type:'line',
+   data:{labels:['1','2','3','4','5','6','7'],datasets:[{label:'Temp',data:d.daily.temperature_2m_max}]}
+  });
+ }catch(e){winfo.innerText='Weather update unavailable';}
+}
+
+// Anand Marga Live Ticker – only headings in bar
+async function loadTicker(){
+ const feeds=[
+  'https://anandamarga.org/feed/',
+  'https://proutglobe.org/feed/',
+  'https://prabhatasamgiita.net/feed/'
+ ];
+ let all=[];
+ for(let f of feeds){
+  try{
+   let j=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+f).then(r=>r.json());
+   all=all.concat(j.items.map(i=>({t:i.title,l:i.link})));
+  }catch{}
+ }
+ tickerText.innerHTML = all.slice(0,12).map(n=>`<span onclick=window.open('${n.l}','_blank')>${n.t} &nbsp; • &nbsp;</span>`).join('');
+}
+
+// Baba stories renderer
+function openStory(id){
+ const stories={
+ 1:'Story of Baba visiting remote village and teaching service before self...',
+ 2:'Baba showed infinite compassion to a suffering devotee...',
+ 3:'Through discipline Baba awakened inner strength...'
+ };
+ dynamic.innerHTML=`<div style='padding:10px'><h3>Baba Story</h3><p>${stories[id]}</p><div class='smallBox' onclick="load('baba')">Back</div></div>`;
+}
+
+// Anand Marga Live Ticker
+async function loadTicker(){
+ const feeds=[
+  'https://anandamarga.org/feed/',
+  'https://proutglobe.org/feed/',
+  'https://prabhatasamgiita.net/feed/'
+ ];
+ let all=[];
+ for(let f of feeds){
+  try{
+   let j=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+f).then(r=>r.json());
+   all=all.concat(j.items.map(i=>({t:i.title,l:i.link})));
+  }catch{}
+ }
+ tickerText.innerHTML = all.slice(0,15).map(n=>`<span onclick=window.open('${n.l}','_blank')> ${n.t} &nbsp; • &nbsp;</span>`).join('');
+}
+
+// Segregated News
+async function loadNewsL(type){
+ const map={
+  headlines:'https://news.google.com/home?hl=en-GB&gl=GB&ceid=GB%3Aen',
+  india:'https://news.google.com/topics/CAAqJQgKIh9DQkFTRVFvSUwyMHZNRE55YXpBU0JXVnVMVWRDS0FBUAE?hl=en-IN&gl=IN&ceid=IN%3Aen',
+  world:'https://news.google.com/topics/CAAqKggKIiRDQkFTRlFvSUwyMHZNRGx1YlY4U0JXVnVMVWRDR2dKSFFpZ0FQAQ?hl=en-GB&gl=GB&ceid=GB%3Aen',
+  sports:'https://news.google.com/topics/CAAqKggKIiRDQkFTRlFvSUwyMHZNRFp1ZEdvU0JXVnVMVWRDR2dKSFFpZ0FQAQ?hl=en-GB&gl=GB&ceid=GB%3Aen',
+  finance:'https://news.google.com/topics/CAAqJggKIiBDQkFTRWdvSkwyMHZNRGRrWm5aNkVnVmxiaTFIUWlnQVAB?hl=en-GB&gl=GB&ceid=GB%3Aen',
+  politics:'https://news.google.com/search?for=indian+politics&hl=en-GB&gl=GB&ceid=GB%3Aen'
+ };
+ try{
+  window.open(map[type]);
+ }catch{news.innerHTML='News unavailable';}
+}
+
+loadTicker();
+setInterval(loadTicker,120000);
+
+async function loadNews(){
+ try{
+ const sections={
+  'India – NDTV':'https://feeds.feedburner.com/ndtvnews-top-stories',
+  'World – The Hindu':'https://www.thehindu.com/news/international/feeder/default.rss',
+  'Sports – Indian Express':'https://indianexpress.com/section/sports/feed/'
+ };
+ let html='';
+ for(let t in sections){
+  let j=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+sections[t]).then(r=>r.json());
+  html+=`<div class='newsSection'><div class='newsHeader'>${t}</div>`+
+   j.items.slice(0,5).map(n=>`<div class='newsItem' onclick=window.open('${n.link}','_blank')>${n.title}</div>`).join('')+
+   `</div>`;
+ }
+ news.innerHTML=html;
+ }catch(e){news.innerHTML='News update unavailable';}
+}
+
+// FAST LIVE UPDATES
+weather();
+loadNews();
+setInterval(weather, 3*60*1000); // every 3 minutes
+setInterval(loadNews, 2*60*1000); // every 2 minutes
+// QUOTATIONS FROM ANANDA MARGA
+const quotes=[
+"Service to humanity is the highest sadhana.",
+"Remember Baba in every action of life.",
+"Morality is the base, spirituality is the goal.",
+"Move together, sing together, live with one heart.",
+"Where there is love, there is victory.",
+"Human life is for self-realization and service."
+];
+let qi=0;
+function rotateQuote(){ quoteBox.innerText=quotes[qi%quotes.length]; qi++; }
+rotateQuote();
+setInterval(rotateQuote,30000);
+
+
+
+</script>
+<h4 style="text-align:center;">❤️ Made With Love For Papa ❤️</h4>
+</body>
+</html>

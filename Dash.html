@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Papa Home</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js">// Anand Marga sliding ticker content
+const amItems=[
+ {t:'RU News',l:'https://anandamarga.org'},
+ {t:'Service Reports',l:'https://anandamarga.org/service'},
+ {t:'Prout Updates',l:'https://proutglobe.org'},
+ {t:'Prabhat Samgiita Events',l:'https://prabhatasamgiita.net/'},
+ {t:'Disaster Relief',l:'https://anandamarga.org'}
+];
+function loadTicker(){
+ amTicker.innerHTML=amItems.map(i=>
+   `<a href="${i.l}" target="_blank" style="margin-right:40px;color:var(--text);text-decoration:none">${i.t}</a>`
+ ).join('');
+ amTicker.animate([{transform:'translateX(100%)'},{transform:'translateX(-100%)'}],{duration:26000,iterations:Infinity});
+}
+loadTicker();
+
+</script>
+
+<style>
+/* Space background effect */
+body::before{
+ content:'';position:fixed;inset:0;
+ background:radial-gradient(2px 2px at 20% 30%,rgba(255,255,255,.6),transparent),
+            radial-gradient(2px 2px at 70% 60%,rgba(255,255,255,.5),transparent),
+            radial-gradient(1.5px 1.5px at 40% 80%,rgba(255,255,255,.4),transparent);
+ background-size:200px 200px;
+ opacity:.35;z-index:-1;
+ animation:spaceMove 60s linear infinite;
+}
+@keyframes spaceMove{from{background-position:0 0}to{background-position:400px 400px}}
+
+:root{
+ --g:linear-gradient(120deg,#1e88e5,#4dd0e1);
+ --g2:linear-gradient(120deg,#43cea2,#185a9d);
+ --bg:#f0f6fc;--card:#ffffff;--text:#0b1f33;
+ --border:#cfdff2;--soft:#e8f1ff;
+}
+.dark{
+ --bg:#0e1623;--card:#162030;--text:#e2edff;
+ --border:#22324a;--soft:#1c2a3f;
+}
+body{margin:0;font-family:'Poppins','Segoe UI',system-ui;background:var(--bg);color:var(--text)}
+.sticky{position:sticky;top:0;z-index:100}
+
+.top{background:var(--g);padding:14px;text-align:center;font-size:22px;font-weight:700;color:#fff}
+header{background:var(--card);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:10px 14px}
+
+.clock{font-weight:600}
+.themeBtn{cursor:pointer;padding:6px 10px;border-radius:12px;border:1px solid var(--border);background:var(--soft)}
+
+/* LEFT SLIDER ONLY */
+.left{
+ background:var(--card);border:1px solid var(--border);border-radius:18px;
+ padding:10px;height:82vh;overflow-y:auto;
+}
+
+.searchWrap{padding:4px}
+.searchBar{width:94%;padding:8px;border-radius:16px;border:1px solid var(--border);margin:4px}
+
+.cat{padding:9px;border:1px solid var(--border);border-radius:14px;margin:6px 0;cursor:pointer;background:var(--soft);display:flex;gap:6px;align-items:center}
+.cat:hover{background:var(--g);color:#fff}
+
+.layout{display:grid;grid-template-columns:240px 1fr 350px;gap:10px;padding:10px}
+.center{padding:0 10px}
+.note{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:15px;text-align:center;margin-bottom:10px;font-weight:600}
+#dynamic{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;min-height:420px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.smallBox{padding:12px;border:1px solid var(--border);border-radius:14px;text-align:center;background:var(--soft);cursor:pointer}
+.smallBox:hover{background:var(--g2);color:#fff}
+
+.right{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:10px}
+
+.newsSection{border:1px solid var(--border);border-radius:14px;margin-bottom:8px}
+.newsHeader{padding:6px 8px;font-weight:600;background:var(--soft)}
+.newsItem{padding:6px 8px;border-top:1px solid var(--border);cursor:pointer}
+.newsItem:hover{background:var(--soft)}
+
+.todoRow{display:flex;justify-content:space-between;margin:6px 0;padding:6px;border:1px solid var(--border);border-radius:10px}
+.closeBtn{float:right;cursor:pointer}
+
+.illus{width:26px;opacity:.9}
+</style>
+</head>
+
+<body>
+<div class="sticky">
+ <div class="top">Be Great, By your Sadhana, By your Service and By your Sacrifice</div>
+ <header>
+  <div>Papa Home</div>
+  <div class="clock" id="clock"></div>
+  <div class="themeBtn" onclick="toggleTheme()" title="Eye Comfort Theme">◐</div>
+ </header>
+
+ <!-- Anand Marga Live Ticker -->
+ <div id="amTicker" style="background:var(--soft);border-bottom:1px solid var(--border);padding:6px;white-space:nowrap;overflow:hidden">
+   <div id="tickerText" style="display:inline-block;padding-left:100%;animation:ticker 32s linear infinite;cursor:pointer"></div>
+ </div>
+ <style>@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-100%)}}</style>
+</div>
+
+ <!-- Sliding Anand Marga News Ticker -->
+ <div class="ticker" style="background:var(--card);border-bottom:1px solid var(--border);padding:6px;overflow:hidden">
+   <div id="amTicker" style="white-space:nowrap"></div>
+ </div>
+</div>
+
+<div class="layout">
+
+<div class="left">
+ <div class="searchWrap">
+  <input class="searchBar" id="filter" placeholder="Search categories..." onkeyup="filterMenu()"/>
+ </div>
+
+ <div class="cat" onclick="load('finance')">
+   <img class="illus" src="https://cdn-icons-png.flaticon.com/512/869/869869.png"/> Finance
+ </div>
+
+ <div class="cat" onclick="load('health')">
+   <img class="illus" src="https://cdn-icons-png.flaticon.com/512/2913/2913465.png"/> Health
+ </div>
+
+ <div class="cat" onclick="load('city')">
+   <img class="illus" src="https://cdn-icons-png.flaticon.com/512/854/854878.png"/> City
+ </div>
+
+ <div class="cat" onclick="load('spiritual')">
+   <img class="illus" src="https://upload.wikimedia.org/wikipedia/commons/3/32/Ananda_Marga_Pratiik.svg"/> Spiritual
+ </div>
+
+ <div class="cat" onclick="load('baba')">
+   <img class="illus" src="https://upload.wikimedia.org/wikipedia/commons/3/32/Ananda_Marga_Pratiik.svg"/> Baba Stories
+ </div>
+
+ <div class="cat" onclick="openTodo()">
+   <img class="illus" src="https://cdn-icons-png.flaticon.com/512/1828/1828640.png"/> Todo List
+ </div>
+</div>
+
+<div class="center">
+ <!-- Dynamic middle box -->
+ <div class="note" id="quoteBox">Loading wisdom...</div>
+ <div id="dynamic"></div>
+
+ <!-- News moved below middle box -->
+ <div style="margin-top:12px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:10px">
+  <h4>Live News</h4>
+  <div class="grid">
+   <div class="smallBox" onclick="loadNews('headlines')">Headlines</div>
+   <div class="smallBox" onclick="loadNews('india')">India</div>
+   <div class="smallBox" onclick="loadNews('world')">World</div>
+   <div class="smallBox" onclick="loadNews('sports')">Sports</div>
+   <div class="smallBox" onclick="loadNews('finance')">Finance</div>
+   <div class="smallBox" onclick="loadNews('politics')">Political</div>
+   <div class="smallBox" onclick="loadNews('education')">Education</div>
+   <div class="smallBox" onclick="loadNews('disaster')">Disaster</div>
+  </div>
+  <div id="news"></div>
+ </div>
+</div>
+
+<div class="right">
+ <h4>Live Weather – Global</h4>
+ <input class="searchBar" id="cityInput" placeholder="City / Town / Village / Country"/>
+ <div class="smallBox" onclick="weather()">Get Weather</div>
+ <div id="winfo"></div>
+ <div id="sun"></div>
+ <canvas id="chart"></canvas>
+
+ 
+</div>
+
+</div>
+
+<script>
+setInterval(()=>clock.innerText=new Date().toLocaleTimeString(),1000);
+function toggleTheme(){document.body.classList.toggle('dark')}
+
+function filterMenu(){
+ let v=filter.value.toLowerCase();
+ document.querySelectorAll('.cat').forEach(c=>{
+  c.style.display=c.innerText.toLowerCase().includes(v)?'flex':'none';
+ });
+}
+
+function openTodo(){
+ dynamic.innerHTML=`
+ <h3>Todo List <span class='closeBtn' onclick='dynamic.innerHTML=""'>✕</span></h3>
+ <input id='ttext' class='searchBar' placeholder='Add work'/>
+ <div class='smallBox' onclick='addTodo()'>Add</div>
+ <div id='tlist'></div>`;
+}
+
+function addTodo(){
+ let v=ttext.value;if(!v)return;
+ tlist.innerHTML+=`<div class='todoRow'>${v}<span onclick='this.parentNode.remove()'>✕</span></div>`;
+ ttext.value='';
+}
+
+function load(s){
+ if(s=='baba'){
+  dynamic.innerHTML=`
+   <h3>Baba Stories – Index</h3>
+   <div class='grid'>
+    <div class='smallBox' onclick="openStory(1)">Baba & Village Service</div>
+    <div class='smallBox' onclick="openStory(2)">Compassion of Baba</div>
+    <div class='smallBox' onclick="openStory(3)">Discipline & Love</div>
+   </div>`;
+ }
+
+
+ if(s=='finance')dynamic.innerHTML=`<div class='grid'>
+  <div class='smallBox' onclick="window.open('https://moneycontrol.com','_blank')">Share Market</div>
+  <div class='smallBox' onclick="window.open('https://mutualfundssahihai.com','_blank')">Mutual Funds</div>
+  <div class='smallBox' onclick="window.open('https://goodreturns.in','_blank')">Gold</div>
+ </div>`;
+
+ if(s=='health')dynamic.innerHTML=`<div class='grid'>
+  <div class='smallBox' onclick="window.open('https://apollo247.com','_blank')">Hospital</div>
+  <div class='smallBox' onclick="window.open('https://1mg.com','_blank')">Medicines</div>
+  <div class='smallBox' onclick="window.open('https://yoga.ayush.gov.in','_blank')">Yoga</div>
+ </div>`;
+
+ if(s=='city')dynamic.innerHTML=`<div class='grid'>
+  <div class='smallBox' onclick="window.open('https://news.google.com','_blank')">Local News</div>
+  <div class='smallBox' onclick="window.open('https://municipality.gov.in','_blank')">Municipality</div>
+  <div class='smallBox' onclick="window.open('https://kseb.in','_blank')">Electricity</div>
+ </div>`;
+
+ if(s=='spiritual')dynamic.innerHTML=`<div class='grid'>
+  <div class='smallBox' onclick="window.open('https://prabhatasamgiita.net/','_blank')">Prabhat Samgiita</div>
+  <div class='smallBox' onclick="window.open('https://anandamarga.org','_blank')">Ananda Marga</div>
+  <div class='smallBox' onclick="window.open('https://proutglobe.org','_blank')">Prout</div>
+ </div>`;
+}
+
+async function weather(city){
+ try{
+  city = city || cityInput.value || 'Delhi';
+
+  // Primary: Open‑Meteo global
+  let geo = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}`).then(r=>r.json());
+
+  // Fallback to wttr for tiny villages
+  if(!geo.results){
+    let w = await fetch(`https://wttr.in/${city}?format=j1`).then(r=>r.json());
+    winfo.innerHTML = `🌡 ${w.current_condition[0].temp_C}°C<br/>💧 Humidity: ${w.current_condition[0].humidity}%<br/>🍃 Wind: ${w.current_condition[0].windspeedKmph} km/h`;
+    sun.innerHTML = `🌅 Sunrise: ${w.weather[0].astronomy[0].sunrise} | 🌇 Sunset: ${w.weather[0].astronomy[0].sunset}`;
+    return;
+  }
+
+  let {latitude, longitude, name, country} = geo.results[0];
+
+  let d = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m&daily=temperature_2m_max,sunrise,sunset&timezone=auto`).then(r=>r.json());
+
+  winfo.innerHTML = `<b>${name}, ${country}</b><br/>🌡 ${d.current.temperature_2m}°C<br/>💧 Humidity: ${d.current.relative_humidity_2m}%<br/>🍃 Wind: ${d.current.wind_speed_10m} km/h`;
+
+  sun.innerHTML = `🌅 Sunrise: ${new Date(d.daily.sunrise[0]).toLocaleTimeString()}<br/>🌇 Sunset: ${new Date(d.daily.sunset[0]).toLocaleTimeString()}`;
+
+  new Chart(chart.getContext('2d'),{
+   type:'line',
+   data:{labels:['1','2','3','4','5','6','7'],datasets:[{label:'Temp',data:d.daily.temperature_2m_max}]}
+  });
+ }catch(e){winfo.innerText='Weather update unavailable';}
+}
+
+// Anand Marga Live Ticker – only headings in bar
+async function loadTicker(){
+ const feeds=[
+  'https://anandamarga.org/feed/',
+  'https://proutglobe.org/feed/',
+  'https://prabhatasamgiita.net/feed/'
+ ];
+ let all=[];
+ for(let f of feeds){
+  try{
+   let j=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+f).then(r=>r.json());
+   all=all.concat(j.items.map(i=>({t:i.title,l:i.link})));
+  }catch{}
+ }
+ tickerText.innerHTML = all.slice(0,12).map(n=>`<span onclick=window.open('${n.l}','_blank')>${n.t} &nbsp; • &nbsp;</span>`).join('');
+}
+
+// Baba stories renderer
+function openStory(id){
+ const stories={
+ 1:'Story of Baba visiting remote village and teaching service before self...',
+ 2:'Baba showed infinite compassion to a suffering devotee...',
+ 3:'Through discipline Baba awakened inner strength...'
+ };
+ dynamic.innerHTML=`<div style='padding:10px'><h3>Baba Story</h3><p>${stories[id]}</p><div class='smallBox' onclick="load('baba')">Back</div></div>`;
+}
+
+// Anand Marga Live Ticker
+async function loadTicker(){
+ const feeds=[
+  'https://anandamarga.org/feed/',
+  'https://proutglobe.org/feed/',
+  'https://prabhatasamgiita.net/feed/'
+ ];
+ let all=[];
+ for(let f of feeds){
+  try{
+   let j=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+f).then(r=>r.json());
+   all=all.concat(j.items.map(i=>({t:i.title,l:i.link})));
+  }catch{}
+ }
+ tickerText.innerHTML = all.slice(0,15).map(n=>`<span onclick=window.open('${n.l}','_blank')>🪔 ${n.t} &nbsp; • &nbsp;</span>`).join('');
+}
+
+// Segregated News
+async function loadNews(type){
+ const map={
+  headlines:'https://feeds.feedburner.com/ndtvnews-top-stories',
+  india:'https://www.thehindu.com/news/national/feeder/default.rss',
+  world:'https://www.thehindu.com/news/international/feeder/default.rss',
+  sports:'https://indianexpress.com/section/sports/feed/',
+  finance:'https://www.moneycontrol.com/rss/latestnews.xml',
+  politics:'https://indianexpress.com/section/india/politics/feed/',
+  education:'https://indianexpress.com/section/education/feed/',
+  disaster:'https://reliefweb.int/rss.xml'
+ };
+ try{
+  let j=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+map[type]).then(r=>r.json());
+  news.innerHTML = j.items.slice(0,10).map(n=>`<div class='newsItem' onclick=window.open('${n.link}','_blank')>${n.title}</div>`).join('');
+ }catch{news.innerHTML='News unavailable';}
+}
+
+loadTicker();
+setInterval(loadTicker,120000);
+
+async function loadNews(){
+ try{
+ const sections={
+  'India – NDTV':'https://feeds.feedburner.com/ndtvnews-top-stories',
+  'World – The Hindu':'https://www.thehindu.com/news/international/feeder/default.rss',
+  'Sports – Indian Express':'https://indianexpress.com/section/sports/feed/'
+ };
+ let html='';
+ for(let t in sections){
+  let j=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+sections[t]).then(r=>r.json());
+  html+=`<div class='newsSection'><div class='newsHeader'>${t}</div>`+
+   j.items.slice(0,5).map(n=>`<div class='newsItem' onclick=window.open('${n.link}','_blank')>${n.title}</div>`).join('')+
+   `</div>`;
+ }
+ news.innerHTML=html;
+ }catch(e){news.innerHTML='News update unavailable';}
+}
+
+// FAST LIVE UPDATES
+weather();
+loadNews();
+setInterval(weather, 3*60*1000); // every 3 minutes
+setInterval(loadNews, 2*60*1000); // every 2 minutes
+// QUOTATIONS FROM ANANDA MARGA
+const quotes=[
+"Service to humanity is the highest sadhana.",
+"Remember Baba in every action of life.",
+"Morality is the base, spirituality is the goal.",
+"Move together, sing together, live with one heart.",
+"Where there is love, there is victory.",
+"Human life is for self-realization and service."
+];
+let qi=0;
+function rotateQuote(){ quoteBox.innerText=quotes[qi%quotes.length]; qi++; }
+rotateQuote();
+setInterval(rotateQuote,30000);
+
+// MORNING TEMPLE CALM BACKGROUND – soft JSON style waves
+const bg=document.createElement('canvas');
+bg.id='bg';document.body.prepend(bg);
+bg.style.position='fixed';bg.style.inset=0;bg.style.zIndex='-1';
+const cx=bg.getContext('2d');
+function resize(){bg.width=innerWidth;bg.height=innerHeight}
+resize();window.onresize=resize;
+
+let waves=[...Array(3)].map((_,i)=>({
+ y:0.3+i*0.15,
+ s:0.6+i*0.3,
+ p:Math.random()*6
+}));
+
+function draw(){
+ cx.clearRect(0,0,bg.width,bg.height);
+ let g=cx.createLinearGradient(0,0,0,bg.height);
+ g.addColorStop(0,'#e8f3ff');
+ g.addColorStop(1,'#ffffff');
+ cx.fillStyle=g;
+ cx.fillRect(0,0,bg.width,bg.height);
+
+ cx.strokeStyle='rgba(100,160,255,.18)';
+ cx.lineWidth=1.4;
+
+ waves.forEach(w=>{
+  cx.beginPath();
+  for(let x=0;x<bg.width;x+=5){
+   let y=Math.sin(x*0.005*w.s + w.p)*20 + bg.height*w.y;
+   cx.lineTo(x,y);
+  }
+  cx.stroke();
+  w.p+=0.01;
+ });
+ requestAnimationFrame(draw);
+}
+draw();
+
+</script>
+</body>
+</html>
